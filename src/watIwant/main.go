@@ -5,21 +5,23 @@ import (
 	"log"
 	"net/http"
 	"watIwant/apiserver"
+	"watIwant/config"
 )
 
 type WatIWant struct{}
 
 func (watIWant WatIWant) Run() {
-	fmt.Println("watIwant service listening at port: 8080")
-	err := http.ListenAndServe(":8080", apiserver.Handlers())
+	appConfig := config.GetConfiguration()
 
-	if(err != nil){
-		log.Fatal(":8080", err)
+	fmt.Println("watIwant service listening at port: "+appConfig.Environment.Port)
+	errListen := http.ListenAndServe(":"+appConfig.Environment.Port, apiserver.Handlers())
+
+	if errListen != nil{
+		log.Fatal(appConfig.Environment.Port, errListen)
 	}
 }
 
 func main()  {
-	println("Hello World")
 	watIwant := new(WatIWant)
 	watIwant.Run()
 }

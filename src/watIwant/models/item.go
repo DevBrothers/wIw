@@ -1,15 +1,15 @@
 package models
 
-type ItemModel struct {
+type Item struct {
 	Name string `json:"name"`
 }
 
-func NewItemModel() *ItemModel{
-	var itemModel ItemModel
+func NewItemModel() *Item {
+	var itemModel Item
 	return &itemModel
 }
 
-func NewItemModelWithName(name string) *ItemModel{
+func NewItemModelWithName(name string) *Item {
 	itemModel := NewItemModel()
 	itemModel.Name = name
 	return itemModel
