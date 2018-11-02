@@ -1,7 +1,14 @@
 package models
 
+import (
+	"github.com/jinzhu/gorm"
+	"github.com/google/uuid"
+)
+
 type Item struct {
-	Name string `json:"name"`
+	BaseModel
+	Name string `json:`
+	ShortDescription string `json:`
 }
 
 func NewItemModel() *Item {
@@ -9,8 +16,12 @@ func NewItemModel() *Item {
 	return &itemModel
 }
 
-func NewItemModelWithName(name string) *Item {
-	itemModel := NewItemModel()
-	itemModel.Name = name
-	return itemModel
+func (item Item) BeforeCreate(scope *gorm.Scope) error{
+	uid, err := uuid.NewUUID()
+
+	if err != nil {
+		return err
+	}
+	scope.SetColumn("UUID",uid.String())
+	return nil
 }

@@ -9,7 +9,7 @@ func itemRoutes(parentGroup *gin.RouterGroup)  {
 	items := parentGroup.Group("/item")
 	{
 		items.GET("", controllers.NewItemController().Get)
-		//items.POST("", controllers.NewItemController().Post)
+		items.POST("", controllers.NewItemController().Post)
 
 		item:=items.Group(":item_id")
 		{

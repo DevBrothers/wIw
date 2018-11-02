@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"log"
 	"watIwant/config"
 	"watIwant/models"
 )
@@ -14,8 +15,9 @@ func NewItemDAO() ItemDAO{
 	var db = config.GetDatabase()
 
 	if !db.HasTable(models.Item{}){
-		db.Table("item").CreateTable(models.Item{})
+		db.CreateTable(models.Item{})
 	}
+	db.AutoMigrate(models.Item{})
 	return ItemDAO{database:db}
 }
 
@@ -28,4 +30,13 @@ func (itemDAO ItemDAO) ReadAll() ([]models.Item, error) {
 	var collection []models.Item
 	err := itemDAO.database.Find(&collection).Error
 	return collection, err
+}
+func (itemDAO ItemDAO) Insert(item models.Item) (string, error) {
+	if result := itemDAO.database.NewRecord(item); result{
+		log.Println(result)
+	}
+	itemDAO.database.Create(&item)
+	itemDAO.database.NewRecord(item)
+
+	return item.UUID, nil
 }

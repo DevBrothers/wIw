@@ -1,6 +1,6 @@
 [Environment]
 Type = "dev"
-Port = "9001"
+Port = "9012"
 
 [Database]
 SqliteFilePath ="database.db"
