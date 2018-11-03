@@ -8,11 +8,9 @@ import (
 )
 
 type IDatabase interface {
-
 }
 
-
-type Database struct{
+type Database struct {
 	*gorm.DB
 }
 
@@ -20,7 +18,7 @@ var database *Database
 
 func InitializeDatabase() *Database {
 
-	databaseConfig :=  GetConfiguration().Database
+	databaseConfig := GetConfiguration().Database
 
 	for database == nil {
 		db, err := gorm.Open("sqlite3", databaseConfig.SqliteFilePath)
@@ -36,7 +34,7 @@ func InitializeDatabase() *Database {
 	return database
 }
 
-func GetDatabase() *Database{
+func GetDatabase() *Database {
 	if database == nil {
 		InitializeDatabase()
 	}

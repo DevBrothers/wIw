@@ -4,12 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Handlers() *gin.Engine{
+func Handlers() *gin.Engine {
 	engine := gin.Default()
-
-	apiV1 := engine.Group("/v1")
-	{
-		itemRoutes(apiV1)
-	}
+	V1Routes(engine)
 	return engine
 }
