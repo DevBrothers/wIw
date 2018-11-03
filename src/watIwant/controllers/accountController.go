@@ -27,7 +27,7 @@ func (controller AccountController) Register(context *gin.Context) {
 	if result {
 		context.JSON(http.StatusCreated, nil)
 	} else if message == "yet exists" {
-		context.JSON(http.StatusBadRequest, "You yet have an account")
+		context.JSON(http.StatusConflict, "An account already exists")
 	} else {
 		context.JSON(http.StatusInternalServerError, nil)
 	}

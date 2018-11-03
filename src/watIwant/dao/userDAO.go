@@ -30,20 +30,23 @@ func (userDAO UserDAO) GetPublicUser(username string) *models.UserPublic {
 	}
 	return &user
 }
+
 func (userDAO UserDAO) CreateUser(loginUser models.UserLogin) (bool, string) {
 	var user models.User
 
 	hashedPassword, hashError := utils.HashString(loginUser.Password)
-
 	if hashError != nil {
 		return false, "error during hash"
 	}
+
 	user.Username = loginUser.Username
 	user.Password = string(hashedPassword)
+
 	err := userDAO.database.Where(models.UserLogin{Username: loginUser.Username}).Find(&models.User{}).Error
 	if err == nil {
 		return false, "yet exists"
 	}
+
 	if result := userDAO.database.NewRecord(user); result {
 		log.Println(result)
 	}

@@ -10,29 +10,30 @@ type ItemDAO struct {
 	database *config.Database
 }
 
-
-func NewItemDAO() ItemDAO{
+func NewItemDAO() ItemDAO {
 	var db = config.GetDatabase()
 
-	if !db.HasTable(models.Item{}){
+	if !db.HasTable(models.Item{}) {
 		db.CreateTable(models.Item{})
 	}
 	db.AutoMigrate(models.Item{})
-	return ItemDAO{database:db}
+	return ItemDAO{database: db}
 }
 
-func (itemDAO ItemDAO) ReadOne (itemId string) (models.Item, error){
+func (itemDAO ItemDAO) ReadOne(itemId string) (models.Item, error) {
 	var item models.Item
 	err := itemDAO.database.Find(&item).Where(&models.Item{Name: itemId}).Error
 	return item, err
 }
+
 func (itemDAO ItemDAO) ReadAll() ([]models.Item, error) {
 	var collection []models.Item
 	err := itemDAO.database.Find(&collection).Error
 	return collection, err
 }
+
 func (itemDAO ItemDAO) Insert(item models.Item) (string, error) {
-	if result := itemDAO.database.NewRecord(item); result{
+	if result := itemDAO.database.NewRecord(item); result {
 		log.Println(result)
 	}
 	itemDAO.database.Create(&item)

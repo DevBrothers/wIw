@@ -5,7 +5,7 @@ type User struct {
 }
 
 type UserLogin struct {
-	Username string
+	Username string `gorm:"unique"`
 	Password string
 }
 
@@ -20,8 +20,3 @@ type UserPrivate struct {
 	UserLogin
 	UserPublic
 }
-
-/*func NewUser() *User{
-	var user User
-	return &user
-}*/

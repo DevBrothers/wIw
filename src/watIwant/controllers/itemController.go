@@ -32,8 +32,8 @@ func (controller ItemController) Get(context *gin.Context) {
 
 func (controller ItemController) GetById(ctx *gin.Context) {
 
-	item_id := ctx.Param("item_id")
-	item, err := controller.itemDAO.ReadOne(item_id)
+	itemId := ctx.Param("item_id")
+	item, err := controller.itemDAO.ReadOne(itemId)
 	if err != nil {
 		ctx.JSON(404, nil)
 	}
@@ -42,15 +42,14 @@ func (controller ItemController) GetById(ctx *gin.Context) {
 
 func (controller ItemController) Post(ctx *gin.Context) {
 	var newItem models.Item
-	var err error
-	var uid string
-	err = ctx.BindJSON(&newItem)
+
+	err := ctx.BindJSON(&newItem)
 
 	if err != nil {
 		log.Println(err)
 	}
 
-	uid, err = controller.itemDAO.Insert(newItem)
+	uid, err := controller.itemDAO.Insert(newItem)
 	if err != nil {
 		ctx.JSON(500, err)
 	}

@@ -25,7 +25,7 @@ func GetDefaultAppConfig() *Configuration {
 	defaultConfiguration.Environment.Port = "8080"
 	defaultConfiguration.Environment.Type = "prod"
 	defaultConfiguration.Environment.ApiSecretKey = "SecretKey"
-	defaultConfiguration.Database.SqliteFilePath = "./wiw.sqlite3"
+	defaultConfiguration.Database.SqliteFilePath = "wiw.sqlite3"
 	return &defaultConfiguration
 }
 
